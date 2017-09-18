@@ -4,7 +4,7 @@ import AddPage from '../blogApp/AddPage'
 import {Modal, Button}  from 'react-bootstrap'
 import { Provider } from 'react-redux'
 
-import { GetAllBlog, GetAllCategories } from './blogActions'
+import { GetAllBlog, GetAllCategories, GetAllUsers } from './blogActions'
 
 
 export default class BlogList extends  Component {
@@ -49,6 +49,11 @@ export default class BlogList extends  Component {
         GetAllCategories().then((categories)=>{
             this.props.store.dispatch({type:'GET_ALL_CAT',categories});
         });
+
+        GetAllUsers().then((users)=>{
+            let blogUsers = users.map((user)=>{return{id:user.id,name:user.username}})
+            this.props.store.dispatch({type:'GET_ALL_USERS',blogUsers});
+        });
     }
 
     openAddModal = () =>{
@@ -56,6 +61,7 @@ export default class BlogList extends  Component {
     }
 
     render(){
+        console.log(this.props.store.getState().BlogReducer)
         return(
             <div>
                 <ul>

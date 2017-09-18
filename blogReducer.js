@@ -17,6 +17,8 @@ export default function counter(state = [], action) {
       // EDIT BLOG
     case 'GET_ALL_CAT':
     state.categories = action.categories;
+    case 'GET_ALL_USERS':
+    state.users = action.blogUsers;
     default:
       return state
   }

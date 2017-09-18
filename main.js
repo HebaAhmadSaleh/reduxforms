@@ -13,23 +13,27 @@ import BlogReducer from './blogReducer'
 import { devToolsEnhancer, composeWithDevTools } from 'redux-devtools-extension';
 
 
+const loggerMiddleWare = store => next => action =>{
+  console.log("dispatching =>",action)
+next(action)  
+}
 
-// const composeEnhancers = composeWithDevTools({});
+ const composeEnhancers = composeWithDevTools({});
 
 // const sagaMiddleware = createSagaMiddleware()
-// const store = createStore(
-//   reducer,
-//   composeEnhancers(applyMiddleware(sagaMiddleware))
-// )
+const store = createStore(
+  reducer,
+  composeEnhancers(applyMiddleware(loggerMiddleWare))
+)
 
 // sagaMiddleware.run(rootSaga);
 
-// const action = type => store.dispatch({type})
+ const action = type => store.dispatch({type})
 
 
-const store = createStore(
-  reducer,
-  devToolsEnhancer())
+// const store = createStore(
+//   reducer,
+//   devToolsEnhancer())
 
 
 function render() {
@@ -39,7 +43,7 @@ function render() {
       onIncrement={() => action('INCREMENT')}
       onDecrement={() => action('DECREMENT')}
       onIncrementAsync={() => action('INCREMENT_ASYNC')} />,
-    document.getElementById('root')
+    document.getElementById('my-app')
   )
 }
 

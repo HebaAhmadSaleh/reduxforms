@@ -28,6 +28,18 @@ export function GetAllCategories() {
 }
 
 
+export function GetAllUsers() {
+    let url = API_URL + '/users';
+    return axios.get(url)
+        .then((response) => {
+            let users;
+            users = response.data;
+            return users;
+        }).catch((error) => {
+            handleError(error);
+        });
+}
+
 export function AddBlog(obj) {
     let url = API_URL + '/blogs';
     return axios.post(url,{
@@ -39,4 +51,9 @@ export function AddBlog(obj) {
         }).catch((error) => {
             handleError(error);
         });
+}
+
+
+function handleError(e){
+    console.log(e)
 }

@@ -14,7 +14,16 @@ import Blogs from './blogApp/blogList'
 import BlogReducer from './blogReducer'
 import { Provider } from 'react-redux'
 import { devToolsEnhancer, composeWithDevTools } from 'redux-devtools-extension';
-import ReduxThunk from 'redux-thunk' // no changes here 😀
+import ReduxThunk from 'redux-thunk' // no changes here 😀 
+
+
+
+const promiseMiddleWare = store => next => action =>{
+  if(action.promise){
+    action.promise.then((res)=>res.json()).then((res)=>store.dispatch({type:action.type,payload:res}))  
+  }
+  next(action)  
+}
 
 
 const rootReducer = combineReducers({
@@ -26,6 +35,8 @@ const rootReducer = combineReducers({
 const store = createStore(rootReducer,composeWithDevTools(applyMiddleware(ReduxThunk)))
 
 // sagaMiddleware.run(rootSaga);
+
+
 
 const action = type => store.dispatch({type})
 
